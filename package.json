@@ -1,0 +1,23 @@
+{
+  "name": "i18n-helper",
+  "version": "1.0.0",
+  "description": "A utility to extract i18n keys",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/new-proimage/i18n-helper.git"
+  },
+  "keywords": [
+    "i18n",
+    "g10n"
+  ],
+  "author": "Ofer Skulsky",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/new-proimage/i18n-helper/issues"
+  },
+  "homepage": "https://github.com/new-proimage/i18n-helper#readme"
+}
