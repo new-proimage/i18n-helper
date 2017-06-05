@@ -19,11 +19,6 @@ translate("message.key.in.g10n.file" , var1 , var2)
 
 TBD
 
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 * **Ofer Skulsky** - *Initial work* - [New ProImage](http://www.new-proimage.com/)
