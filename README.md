@@ -17,7 +17,13 @@ translate("message.key.in.g10n.file" , var1 , var2)
 
 ### Installing
 
-TBD
+#### Manualy running the i18n-helper
+* clone the repository
+	git clone https://github.com/new-proimage/i18n-helper.git i18n-helper/
+* run npm install
+* edit the parameters.config.template.js with any editor, and save as parameters.config.js
+* run the utility
+	node index.js -a -o -c ./parameters.config.template.js
 
 ## Authors
 
