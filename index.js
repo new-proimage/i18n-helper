@@ -115,20 +115,19 @@ function parseDir(target, patterns) {
         if (file.match(patterns[i].files)) {
           let data = fs.readFileSync(file, 'utf8');
           for (let j = 0; j < patterns[i].patterns.length; j++) {
-            let results = data.match(patterns[i].patterns[j].pattern);
-            if (results) {
-              for (let r = 0; r < results.length; r++) {
-                let result = results[r];
-                let key = result.toString().substring(patterns[i].patterns[j].pre, result.length - patterns[i].patterns[j].post);
-                buffer += `${file} + ${patterns[i].patterns[j].pattern} -> ${key}\n`;
-                console.log(`${file} + ${patterns[i].patterns[j].pattern} -> ${key}`);
-                if (key.startsWith('"') || key.startsWith("'")) {
-                  allSrcKeys.push(key.substring(1, key.length - 1));
-                } else {
-                  let msg = `${file} -> ${key} is not a string and can not be handled\n`;
-                  buffer += msg + '\n';
-                  console.log(msg);
-                }
+            let results = [];
+            let regex = new RegExp(patterns[i].patterns[j].pattern);
+            let group = patterns[i].patterns[j].group;
+            while ((results = regex.exec(data)) !== null) {
+              let key = results[group];
+              buffer += `${file} + ${patterns[i].patterns[j].pattern} -> ${key}\n`;
+              console.log(`${file} + ${patterns[i].patterns[j].pattern} -> ${key}`);
+              if (key.startsWith('"') || key.startsWith("'")) {
+                allSrcKeys.push(key.substring(1, key.length - 1));
+              } else {
+                let msg = `${file} -> ${key} is not a string and can not be handled\n`;
+                buffer += msg + '\n';
+                console.log(msg);
               }
             }
           }

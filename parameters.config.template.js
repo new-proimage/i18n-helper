@@ -19,8 +19,8 @@ module.exports = {
     srcFiles: [{
       files: /\.(js|hbs)$/,
       patterns: [
-        {pattern: /[^'"]translate\([^)]*\)/g, pre: 11, post: 1 },
-        {pattern: /\{\{t [^}]*\}/g, pre: 4, post: 1 }
+        {pattern: /[^'"]translate\((['"][^)]*['"])(?:(?:[^'"])*)\)/g, group: 1},
+        {pattern: /[^'"]\{\{t (['"][^)]*['"])(?:(?:[^'"])*)\}\}/g, group: 1}
       ]
     }]
   }],
