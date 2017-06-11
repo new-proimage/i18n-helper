@@ -123,7 +123,7 @@ function parseDir(target, patterns) {
               let key = results[group];
               buffer += `${file} + ${patterns[i].patterns[j].pattern} -> ${key}\n`;
               console.log(`${file} + ${patterns[i].patterns[j].pattern} -> ${key}`);
-              if (badKeyRegex.match(key)) {
+              if (key.match(badKeyRegex)) {
                 let msg = `${file} -> ${key} is a concatenation of Strings and values and can not be handled\n`;
                 buffer += msg + '\n';
                 console.log(msg);
