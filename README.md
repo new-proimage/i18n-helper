@@ -31,7 +31,7 @@ translate("message.key.in.g10n.file" , var1 , var2)
 
 ## License
 
-This project is licensed under the LGPL License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the LGPL License - see the [LICENSE.md](https://github.com/new-proimage/i18n-helper/blob/master/LICENSE) file for details
 
 ## Acknowledgments
 
