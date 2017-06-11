@@ -156,8 +156,8 @@ function buildMsgTree(){
     let isBaseLang = lang.match(theBaseLang);
     reports[lang] = [];
     for (let key in allSrcKeys) {
-      let match = currentKeys[allSrcKeys[key]];
       let theKey = allSrcKeys[key];
+      let match = currentKeys[theKey];
       if ("undefined" === typeof match) {
         theProblem = problemTypeNoTranslation;
       } else if(match.match(/^==.*==$/)){
@@ -196,6 +196,7 @@ function addNewValue(reports, lang, theProblem, usedKeys, theKey, newValue) {
   if ("undefined" === typeof usedKeys[theKey]) {
     usedKeys[theKey] = 1;
     reports[lang][theProblem].push({ key: theKey, value: newValue });
+    allI18NFiles[lang][theKey] = newValue;
   }
 }
 
