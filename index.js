@@ -6,6 +6,7 @@ const path = require("path");
 const readline = require('readline');
 let config = {};
 
+const badKeyRegex = /(['"])\W?\+[^+]+\+\W?\1/g;
 const problemTypeNoTranslation = 'Needs translation';
 const problemTypeNotInSource = 'key not found in source files';
 const problemTypeOk = 'OK';
@@ -122,7 +123,11 @@ function parseDir(target, patterns) {
               let key = results[group];
               buffer += `${file} + ${patterns[i].patterns[j].pattern} -> ${key}\n`;
               console.log(`${file} + ${patterns[i].patterns[j].pattern} -> ${key}`);
-              if (key.startsWith('"') || key.startsWith("'")) {
+              if (badKeyRegex.match(key)) {
+                let msg = `${file} -> ${key} is a concatenation of Strings and values and can not be handled\n`;
+                buffer += msg + '\n';
+                console.log(msg);
+              } else if (key.startsWith('"') || key.startsWith("'")) {
                 allSrcKeys.push(key.substring(1, key.length - 1));
               } else {
                 let msg = `${file} -> ${key} is not a string and can not be handled\n`;
