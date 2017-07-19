@@ -21,6 +21,7 @@ let targetFolders = [];
 let allI18NFiles = [];
 let allSrcKeys = [];
 let reports = [];
+let errorBuffer = '';
 let buffer = '';
 
 ////////////////////////////////////////////////////
@@ -57,6 +58,7 @@ if ('string' === typeof configFile && fs.statSync(configFile).isFile()) {
 ////////////////////////////////////////////////////
 
 function main(options) {
+  fs.appendFileSync(`translate.log`, buffer);
   loadConfiguration();
   laodLangFiles();
   lookupKeys();
@@ -111,7 +113,6 @@ function parseDir(target, patterns) {
     if (fs.statSync(file).isDirectory()) {
       parseDir(file, patterns);
     } else if (fs.statSync(file).isFile()) {
-      let buffer = '';
       for (let i = 0; i < patterns.length; i++) {
         if (file.match(patterns[i].files)) {
           let data = fs.readFileSync(file, 'utf8');
@@ -125,12 +126,14 @@ function parseDir(target, patterns) {
               console.log(`${file} + ${patterns[i].patterns[j].pattern} -> ${key}`);
               if (key.match(badKeyRegex)) {
                 let msg = `${file} -> ${key} is a concatenation of Strings and values and can not be handled\n`;
+                errorBuffer += msg + '\n';
                 buffer += msg + '\n';
                 console.log(msg);
               } else if (key.startsWith('"') || key.startsWith("'")) {
                 allSrcKeys.push(key.substring(1, key.length - 1));
               } else {
                 let msg = `${file} -> ${key} is not a string and can not be handled\n`;
+                errorBuffer += msg + '\n';
                 buffer += msg + '\n';
                 console.log(msg);
               }
@@ -230,7 +233,11 @@ function printReport(){
    for (let lang in reports) {
     let report = path.join(localeDir,lang,`report_${lang}.txt`);
     let data = `Auto generated at: ${new Date().toLocaleString()} (UTC: ${new Date().toISOString(). replace(/T/, ' ').replace(/\..+/, '')})`;
+    data += errorBuffer;
     for (let msg in reports[lang]) {
+      if(msg === problemTypeOk) {
+        continue;
+      }
       data += `
 
 
